@@ -5,6 +5,6 @@ spring:
     gateway:
       routes:
         - id: user-service
-          uri: http://localhost:8081  # Modifica con l'URI corretto
+          uri: http://localhost:8080  # Modifica con l'URI corretto
           predicates:
             - Path=/user/**
