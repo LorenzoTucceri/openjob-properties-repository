@@ -1,14 +1,33 @@
 server:
   port: 9000
+
 spring:
   cloud:
     gateway:
-      routes:
-        - id: user-service
-          uri: http://localhost:9045  # porta corretta del user-service
-          predicates:
-            - Path=/user/**
-        - id: job-service
-          uri: http://localhost:9055  # porta corretta del job-service
-          predicates:
-            - Path=/job/**
+      server:
+        webflux:
+          routes:
+            - id: user_route
+              uri: http://localhost:9044
+              predicates:
+                - Path=/api/usr/**
+              filters:
+                - RewritePath=/api/usr(?<segment>/?.*), /user${segment}
+            - id: job_route
+              uri: http://localhost:9055
+              predicates:
+                - Path=/api/job/**
+              filters:
+                - RewritePath=/api/job(?<segment>/?.*), /job${segment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+info:
+  application:
+    name: Api Gateway
+    description: Openjob Api Gateway
+    version: 0.0.1-SNAPSHOT
