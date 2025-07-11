@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 9001
 
 spring:
   cloud:
@@ -24,7 +24,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,refresh
 
 info:
   application:
