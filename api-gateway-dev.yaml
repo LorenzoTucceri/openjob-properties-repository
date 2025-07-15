@@ -13,7 +13,7 @@ spring:
               predicates:
                 - Path=/api/usr/**
               filters:
-                - RewritePath=/api/usr/(?<segment>.*), /users/${segment}
+                - RewritePath=/api/usr/(?<segment>.*), /user/${segment}
             - id: job_route
               uri: lb://job-microservice
               predicates:
