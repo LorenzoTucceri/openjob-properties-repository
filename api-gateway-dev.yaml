@@ -1,23 +1,25 @@
 server:
   port: 9001
-  
+
 # Gateway configuration
 spring:
   cloud:
     gateway:
-      routes:
-        - id: user_route
-          uri: lb://user-microservice
-          predicates:
-            - Path=/api/usr/**
-          filters:
-            - RewritePath=/api/usr/(?<segment>.*), /users/${segment}
-        - id: job_route
-          uri: lb://job-microservice
-          predicates:
-            - Path=/api/job/**
-          filters:
-            - RewritePath=/api/job/(?<segment>.*), /${segment}
+      server:
+        webflux:
+          routes:
+            - id: user_route
+              uri: lb://user-microservice
+              predicates:
+                - Path=/api/usr/**
+              filters:
+                - RewritePath=/api/usr/(?<segment>.*), /users/${segment}
+            - id: job_route
+              uri: lb://job-microservice
+              predicates:
+                - Path=/api/job/**
+              filters:
+                - RewritePath=/api/job/(?<segment>.*), /${segment}
 
 eureka:
   client:
@@ -34,7 +36,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "health,info,refresh"
+        include: health,info,refresh
 
 # Application info
 info:
