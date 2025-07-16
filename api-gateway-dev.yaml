@@ -29,6 +29,7 @@ eureka:
   instance:
     lease-renewal-interval-in-seconds: 30
 
+
 # Spring Boot Actuator configuration
 management:
   endpoints:
