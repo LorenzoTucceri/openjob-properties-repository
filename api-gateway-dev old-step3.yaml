@@ -7,7 +7,7 @@ spring:
     gateway:
       routes:
         - id: user_route
-          uri: lb://user-microservice
+          uri: http://localhost:9044
           predicates:
           - Path=/api/usr/**
           filters:
