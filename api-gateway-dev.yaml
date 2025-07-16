@@ -5,21 +5,19 @@ server:
 spring:
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: user_route
-              uri: lb://user-microservice
-              predicates:
-                - Path=/api/usr/**
-              filters:
-                - RewritePath=/api/usr/(?<segment>.*), /user/${segment}
-            - id: job_route
-              uri: lb://job-microservice
-              predicates:
-                - Path=/api/job/**
-              filters:
-                - RewritePath=/api/job/(?<segment>.*), /${segment}
+      routes:
+        - id: user_route
+          uri: http://localhost:9044
+          predicates:
+          - Path=/api/usr/**
+          filters:
+          - RewritePath=/api/usr(?<segment>), /user$\{segment}
+        - id: job_route
+          uri: lb://job-microservice
+          predicates:
+          - Path=/api/job/**
+          filters:
+          - RewritePath=/api(?<segment>/?), $\{segment}
 
 eureka:
   client:
