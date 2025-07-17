@@ -1,3 +1,4 @@
+# Port of the gateway
 server:
   port: 9001
 
@@ -12,6 +13,7 @@ spring:
           - Path=/api/usr/**
           filters:
           - RewritePath=/api/usr(?<segment>), /user$\{segment}
+
         - id: job_route
           uri: lb://job-microservice
           predicates:
@@ -19,27 +21,19 @@ spring:
           filters:
           - RewritePath=/api(?<segment>/?), $\{segment}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,refresh
+
 eureka:
   client:
     registerWithEureka: true
     healthcheck:
       enabled: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVER}
+      #defaultZone: http://localhost:8761/eureka/
   instance:
     lease-renewal-interval-in-seconds: 30
-
-
-# Spring Boot Actuator configuration
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,refresh
-
-# Application info
-info:
-  application:
-    name: Api Gateway
-    description: Openjob Api Gateway
-    version: 0.0.1-SNAPSHOT
